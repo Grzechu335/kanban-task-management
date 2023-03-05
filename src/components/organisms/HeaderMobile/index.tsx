@@ -1,0 +1,66 @@
+import RoundedButton from '@/components/atoms/RoundedButton'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
+import { boardsInfoSelector } from '@/store/DataSlice'
+import { mobileNavStatusSelector, toggleMobileNav } from '@/store/UISlice'
+import Image from 'next/image'
+import mobileAddTaskIcon from 'public/assets/icon-add-task-mobile.svg'
+import arrowDownIcon from 'public/assets/icon-chevron-down.svg'
+import arrowUpIcon from 'public/assets/icon-chevron-up.svg'
+import optionsIcon from 'public/assets/icon-vertical-ellipsis.svg'
+import mobileLogo from 'public/assets/logo-mobile.svg'
+import React from 'react'
+
+const HeaderMobile: React.FC = () => {
+    const { selectedBoardName } = useAppSelector(boardsInfoSelector)
+    const mobileNavStatus = useAppSelector(mobileNavStatusSelector)
+    const dispatch = useAppDispatch()
+    const toggleMobileNavFunction = () => {
+        dispatch(toggleMobileNav())
+    }
+    return (
+        <header className="tablet:hidden h-[64px] flex justify-between items-center px-[16px] dark:bg-dark-grey">
+            <div
+                className="flex items-center space-x-[16px]"
+                onClick={toggleMobileNavFunction}
+            >
+                <Image
+                    src={mobileLogo}
+                    alt="mobile logo"
+                />
+                <div className="flex items-center">
+                    <h2>{selectedBoardName}</h2>
+                    {mobileNavStatus ? (
+                        <Image
+                            src={arrowDownIcon}
+                            alt="show mobile nav"
+                            className="ml-[8px]"
+                        />
+                    ) : (
+                        <Image
+                            src={arrowUpIcon}
+                            alt="hide mobile nav"
+                            className="ml-[8px]"
+                        />
+                    )}
+                </div>
+            </div>
+            <div className="flex items-center space-x-[16px]">
+                <RoundedButton
+                    variant="primary"
+                    size="small"
+                >
+                    <Image
+                        src={mobileAddTaskIcon}
+                        alt="add task icon"
+                    />
+                </RoundedButton>
+                <Image
+                    src={optionsIcon}
+                    alt="options icon"
+                />
+            </div>
+        </header>
+    )
+}
+
+export default HeaderMobile
