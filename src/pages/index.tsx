@@ -26,7 +26,7 @@ export default function Home() {
                 />
             </Head>
             <main
-                className={`${jakartaSans.variable} ${
+                className={`w-full h-full ${jakartaSans.variable} ${
                     darkModeStatus ? 'dark' : ''
                 }`}
             >

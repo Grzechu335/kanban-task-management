@@ -18,7 +18,7 @@ const HeaderMobile: React.FC = () => {
         dispatch(toggleMobileNav())
     }
     return (
-        <header className="tablet:hidden h-[64px] flex justify-between items-center px-[16px] dark:bg-dark-grey">
+        <header className="bg-white  tablet:hidden h-[64px] fixed top-0 left-0 w-full flex justify-between items-center px-[16px] dark:bg-dark-grey">
             <div
                 className="flex items-center space-x-[16px]"
                 onClick={toggleMobileNavFunction}
@@ -31,13 +31,13 @@ const HeaderMobile: React.FC = () => {
                     <h2>{selectedBoardName}</h2>
                     {mobileNavStatus ? (
                         <Image
-                            src={arrowDownIcon}
+                            src={arrowUpIcon}
                             alt="show mobile nav"
                             className="ml-[8px]"
                         />
                     ) : (
                         <Image
-                            src={arrowUpIcon}
+                            src={arrowDownIcon}
                             alt="hide mobile nav"
                             className="ml-[8px]"
                         />

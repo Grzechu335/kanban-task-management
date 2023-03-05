@@ -16,7 +16,7 @@ const Header: React.FC = () => {
     return (
         <header
             className={clsx(
-                'border-b hidden tablet:flex px-[24px] justify-between items-center fixed top-0 border-b-lines-light dark:border-b-lines-dark tablet:h-[81px]  desktop:h-[97px] dark:bg-dark-grey',
+                'border-b hidden tablet:flex px-[24px] justify-between items-center fixed top-0 border-b-lines-light dark:border-b-lines-dark tablet:h-[81px]  desktop:h-[97px] bg-white dark:bg-dark-grey',
                 {
                     'left-[300px] w-[calc(100%-300px)]': sidebarStatus,
                     'left-0 w-full': !sidebarStatus,

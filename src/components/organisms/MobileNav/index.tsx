@@ -1,8 +1,8 @@
 import ThemeSwitcher from '@/components/atoms/ThemeSwitcher'
 import Navigation from '@/components/molecules/Navigation'
 import { useAppDispatch } from '@/hooks/redux'
-import React from 'react'
-import { mobileNavStatusSelector, toggleMobileNav } from '@/store/UISlice'
+import { toggleMobileNav } from '@/store/UISlice'
+import React, { useEffect } from 'react'
 
 const MobileNav: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -10,9 +10,15 @@ const MobileNav: React.FC = () => {
     const toggleMobileNavFunction = () => {
         dispatch(toggleMobileNav())
     }
+    useEffect(() => {
+        document.body.style.overflow = 'hidden'
+        return () => {
+            document.body.style.overflow = 'scroll'
+        }
+    })
     return (
         <div
-            className="bg-black/50 absolute left-0 top-0 w-full h-full  px-[54px]"
+            className="bg-black/50 tablet:hidden fixed left-0 top-0 w-screen h-screen px-[54px]"
             onClick={toggleMobileNavFunction}
         >
             <div

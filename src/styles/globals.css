@@ -9,6 +9,9 @@
     body * {
         @apply transition-colors duration-200 font-sans;
     }
+    body {
+        @apply bg-light-grey dark:bg-very-dark-grey;
+    }
     h1 {
         @apply text-[24px] leading-[30px] font-sans text-black dark:text-white font-bold;
     }
@@ -27,10 +30,10 @@
     bg-transparent {
         background-color: transparent;
     }
-    text-body-large {
+    large-text {
         @apply font-medium text-[13px] leading-[23px];
     }
-    text-body-small {
+    medium-text {
         @apply font-bold text-[12px] leading-[15px];
     }
 }

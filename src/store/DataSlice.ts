@@ -30,14 +30,32 @@ const DataSlice = createSlice({
             const selectedBoardIndex = action.payload
             state.editedData.boardIndex = selectedBoardIndex
         },
+        setEditedTask: (
+            state,
+            action: PayloadAction<{
+                boardIndex: number
+                columnIndex: number
+                taskIndex: number
+            }>
+        ) => {
+            const { boardIndex, columnIndex, taskIndex } = action.payload
+            return {
+                ...state,
+                editedData: {
+                    ...state.editedData,
+                    boardIndex,
+                    columnIndex,
+                    taskIndex,
+                },
+            }
+        },
     },
 })
 
-export const { setEditedBoard } = DataSlice.actions
+export const { setEditedBoard, setEditedTask } = DataSlice.actions
 
 export const boardsInfoSelector = (state: RootState) => {
     const selectedBoardIndex = state.data.editedData.boardIndex
-
     return {
         boardsQuantity: state.data.data.length,
         boardsArray: state.data.data,
@@ -45,5 +63,7 @@ export const boardsInfoSelector = (state: RootState) => {
         selectedBoardName: state.data.data[selectedBoardIndex].name,
     }
 }
+
+export const editedData = (state: RootState) => state.data.editedData
 
 export default DataSlice.reducer
