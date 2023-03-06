@@ -7,7 +7,7 @@
         @apply bg-light-grey dark:bg-dark-grey;
     }
     body * {
-        @apply transition-colors duration-200 font-sans;
+        @apply transition-colors duration-200 font-sans scrollbar-hide;
     }
     body {
         @apply bg-light-grey dark:bg-very-dark-grey;
@@ -27,13 +27,13 @@
 }
 
 @layer components {
-    bg-transparent {
+    .bg-transparent {
         background-color: transparent;
     }
-    large-text {
+    .large-text {
         @apply font-medium text-[13px] leading-[23px];
     }
-    medium-text {
+    .medium-text {
         @apply font-bold text-[12px] leading-[15px];
     }
 }

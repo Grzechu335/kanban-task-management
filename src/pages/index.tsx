@@ -22,13 +22,13 @@ export default function Home() {
                 />
                 <meta
                     name="viewport"
-                    content="width=device-width, initial-scale=1"
+                    content="width=device-width, initial-scale=1, user-scalable=no"
                 />
             </Head>
             <main
-                className={`w-full h-full ${jakartaSans.variable} ${
-                    darkModeStatus ? 'dark' : ''
-                }`}
+                className={`w-full h-full overflow-scroll ${
+                    jakartaSans.variable
+                } ${darkModeStatus ? 'dark' : ''}`}
             >
                 <HomePageTemplate />
             </main>

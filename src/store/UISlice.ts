@@ -8,7 +8,7 @@ interface UIInterface {
 }
 
 const initialState: UIInterface = {
-    darkMode: false,
+    darkMode: true,
     mobileNav: false,
     sidebar: true,
 }

@@ -14,6 +14,7 @@ const ColumnItem: React.FC<ColumnItemProps> = ({
     boardIndex,
 }) => {
     const allTasksQuantity = column.tasks.length
+
     return (
         <div>
             <h4 className="uppercase text-medium-gray mb-[24px]">{`${column.name} (${allTasksQuantity})`}</h4>

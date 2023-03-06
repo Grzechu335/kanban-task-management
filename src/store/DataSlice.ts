@@ -2,6 +2,7 @@ import { RootState } from './store'
 import { Board } from '@/types/DataTypes'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import data from '../data/data.json'
+import { Root } from 'postcss'
 
 interface DataInterface {
     data: Board[]
@@ -9,7 +10,6 @@ interface DataInterface {
         boardIndex: number
         columnIndex: number
         taskIndex: number
-        subTaskIndex: number
     }
 }
 
@@ -19,7 +19,6 @@ const initialState: DataInterface = {
         boardIndex: 0,
         columnIndex: 0,
         taskIndex: 0,
-        subTaskIndex: 0,
     },
 }
 const DataSlice = createSlice({
@@ -49,10 +48,60 @@ const DataSlice = createSlice({
                 },
             }
         },
+        changeTaskColumn: (
+            state,
+            action: PayloadAction<{ index: number; value: string }>
+        ) => {
+            // Get actual edited task indexes
+            const {
+                boardIndex,
+                columnIndex: actualColumnIndex,
+                taskIndex,
+            } = state.editedData
+            const { index: newColumnIndex, value: newColumnName } =
+                action.payload
+            const selectedTask =
+                state.data[boardIndex].columns[actualColumnIndex].tasks[
+                    taskIndex
+                ]
+
+            // Changing status in task object
+            selectedTask.status = newColumnName
+
+            // Add task to new column
+            state.data[boardIndex].columns[newColumnIndex].tasks.push(
+                selectedTask
+            )
+
+            //Remove task from older column
+            const updatedTasks = state.data[boardIndex].columns[
+                actualColumnIndex
+            ].tasks.filter((task) => task.status !== newColumnName)
+
+            // update state
+            state.data[boardIndex].columns[actualColumnIndex].tasks =
+                updatedTasks
+        },
+        toggleSubtask: (state, action: PayloadAction<number>) => {
+            const subtaskIndex = action.payload
+            const { boardIndex, columnIndex, taskIndex } = state.editedData
+            const actualSubtaskState =
+                state.data[boardIndex].columns[columnIndex].tasks[taskIndex]
+                    .subtasks[subtaskIndex].isCompleted
+            // Updating state
+            state.data[boardIndex].columns[columnIndex].tasks[
+                taskIndex
+            ].subtasks[subtaskIndex].isCompleted = !actualSubtaskState
+        },
     },
 })
 
-export const { setEditedBoard, setEditedTask } = DataSlice.actions
+export const {
+    setEditedBoard,
+    setEditedTask,
+    toggleSubtask,
+    changeTaskColumn,
+} = DataSlice.actions
 
 export const boardsInfoSelector = (state: RootState) => {
     const selectedBoardIndex = state.data.editedData.boardIndex
@@ -64,6 +113,27 @@ export const boardsInfoSelector = (state: RootState) => {
     }
 }
 
-export const editedData = (state: RootState) => state.data.editedData
+export const editedDataIndexesSelector = (state: RootState) =>
+    state.data.editedData
+
+export const editedTaskSelector = (state: RootState) => {
+    const { boardIndex, columnIndex, taskIndex } = state.data.editedData
+    return state.data.data[boardIndex].columns[columnIndex].tasks[taskIndex]
+}
+
+export const currentStatusArraySelector = (state: RootState) => {
+    const { boardIndex, columnIndex } = state.data.editedData
+    const statusArray = state.data.data[boardIndex].columns.map(
+        (column, index) => ({
+            value: column.name,
+            label: column.name,
+            index,
+        })
+    )
+    return {
+        statusArray,
+        defaultArrayIndex: columnIndex,
+    }
+}
 
 export default DataSlice.reducer

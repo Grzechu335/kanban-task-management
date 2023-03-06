@@ -1,6 +1,8 @@
 import { useAppDispatch } from '@/hooks/redux'
 import { setEditedTask } from '@/store/DataSlice'
+import { toggleViewTask } from '@/store/EditModesSlice'
 import { Task } from '@/types/DataTypes'
+import clsx from 'clsx'
 import React from 'react'
 
 interface TaskItemProps extends Task {
@@ -29,10 +31,17 @@ const TaskItem: React.FC<TaskItemProps> = ({
             taskIndex,
         }
         dispatch(setEditedTask(editedTask))
+        dispatch(toggleViewTask())
     }
     return (
         <div
-            className="bg-white cursor-pointer dark:text-white flex flex-col space-y-[8px] dark:bg-dark-grey rounded-lg py-[23px] px-[16px]"
+            className={clsx(
+                'bg-white cursor-pointer dark:text-white flex flex-col space-y-[8px] dark:bg-dark-grey rounded-lg py-[23px] px-[16px]',
+                {
+                    'bg-[#0FFF5040] dark:bg-[#0FFF5030]':
+                        allSubtasksQuantity === completedSubtasks,
+                }
+            )}
             onClick={setEditedTaskFunction}
         >
             <h3 className="transition-none">{title}</h3>

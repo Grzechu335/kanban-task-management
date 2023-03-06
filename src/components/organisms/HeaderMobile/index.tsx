@@ -57,6 +57,7 @@ const HeaderMobile: React.FC = () => {
                 <Image
                     src={optionsIcon}
                     alt="options icon"
+                    className="cursor-pointer"
                 />
             </div>
         </header>
