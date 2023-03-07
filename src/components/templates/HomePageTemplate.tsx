@@ -1,10 +1,17 @@
 import { useAppSelector } from '@/hooks/redux'
-import { viewTaskkStatusSelector } from '@/store/EditModesSlice'
+import {
+    deleteBoardStatusSelector,
+    deleteTaskStatusSelector,
+    toggleDeleteBoard,
+    viewTaskStatusSelector,
+} from '@/store/EditModesSlice'
 import {
     darkModeStatusSelector,
     mobileNavStatusSelector,
 } from '@/store/UISlice'
 import React, { useEffect } from 'react'
+import DeleteBoardWindow from '../organisms/DeleteBoardWindow'
+import DeleteTaskWindow from '../organisms/DeleteTaskWindow'
 import Header from '../organisms/Header'
 import HeaderMobile from '../organisms/HeaderMobile'
 import MainBoard from '../organisms/MainBoard'
@@ -14,8 +21,10 @@ import ViewTaskWindow from '../organisms/ViewTaskWindow'
 
 const HomePageTemplate: React.FC = () => {
     const mobileNavStatus = useAppSelector(mobileNavStatusSelector)
-    const viewTaskMode = useAppSelector(viewTaskkStatusSelector)
+    const viewTaskMode = useAppSelector(viewTaskStatusSelector)
     const darkMode = useAppSelector(darkModeStatusSelector)
+    const deleteBoardMode = useAppSelector(deleteBoardStatusSelector)
+    const deleteTaskMode = useAppSelector(deleteTaskStatusSelector)
     useEffect(() => {
         darkMode
             ? (document.body.style.backgroundColor = '#20212C')
@@ -33,6 +42,8 @@ const HomePageTemplate: React.FC = () => {
             <MainBoard />
             <Sidebar />
             {viewTaskMode && <ViewTaskWindow />}
+            {deleteBoardMode && <DeleteBoardWindow />}
+            {deleteTaskMode && <DeleteTaskWindow />}
         </div>
     )
 }

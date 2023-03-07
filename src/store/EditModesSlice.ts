@@ -71,7 +71,7 @@ export const editBoardStatusSelector = (state: RootState) =>
     state.editModes.editBoard
 export const editTaskStatusSelector = (state: RootState) =>
     state.editModes.editTask
-export const viewTaskkStatusSelector = (state: RootState) =>
+export const viewTaskStatusSelector = (state: RootState) =>
     state.editModes.viewTask
 
 export default EditModesSlice.reducer

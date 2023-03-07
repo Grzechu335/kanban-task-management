@@ -53,7 +53,7 @@ const Sidebar: React.FC = () => {
                 </section>
             ) : (
                 <div
-                    className="hidden hover:bg-main-purple-hover tablet:flex absolute cursor-pointer  justify-center items-center left-0 bottom-[32px] bg-main-purple rounded-r-full w-[56px] h-[48px]"
+                    className="hidden fixed hover:bg-main-purple-hover tablet:flex cursor-pointer  justify-center items-center left-0 bottom-[32px] bg-main-purple rounded-r-full w-[56px] h-[48px]"
                     onClick={toggleSidebarFunction}
                 >
                     <Image

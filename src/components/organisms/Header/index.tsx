@@ -8,6 +8,7 @@ import optionsIcon from 'public/assets/icon-vertical-ellipsis.svg'
 import Image from 'next/image'
 import lightModeLogo from 'public/assets/logo-dark.svg'
 import darkModeLogo from 'public/assets/logo-light.svg'
+import HeaderOptionButton from '@/components/atoms/HeaderOptionButton'
 
 const Header: React.FC = () => {
     const { selectedBoardName } = useAppSelector(boardsInfoSelector)
@@ -52,11 +53,7 @@ const Header: React.FC = () => {
                         + Add New Task
                     </RoundedButton>
                 </div>
-                <Image
-                    src={optionsIcon}
-                    alt="options icon"
-                    className="cursor-pointer"
-                />
+                <HeaderOptionButton />
             </div>
         </header>
     )

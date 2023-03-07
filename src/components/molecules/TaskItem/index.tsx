@@ -24,6 +24,9 @@ const TaskItem: React.FC<TaskItemProps> = ({
         if (cur.isCompleted) acc++
         return acc
     }, 0)
+    const everySubtaskCompleted = subtasks.every(
+        (subtask) => subtask.isCompleted
+    )
     const setEditedTaskFunction = () => {
         const editedTask = {
             boardIndex,
@@ -36,10 +39,10 @@ const TaskItem: React.FC<TaskItemProps> = ({
     return (
         <div
             className={clsx(
-                'bg-white cursor-pointer dark:text-white flex flex-col space-y-[8px] dark:bg-dark-grey rounded-lg py-[23px] px-[16px]',
+                ' cursor-pointer dark:text-white flex flex-col space-y-[8px]  rounded-lg py-[23px] px-[16px]',
                 {
-                    'bg-[#0FFF5040] dark:bg-[#0FFF5030]':
-                        allSubtasksQuantity === completedSubtasks,
+                    'bg-[#0FFF5040] dark:bg-[#0FFF5030]': everySubtaskCompleted,
+                    'bg-white dark:bg-dark-grey': !everySubtaskCompleted,
                 }
             )}
             onClick={setEditedTaskFunction}

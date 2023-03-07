@@ -27,11 +27,11 @@ const RoundedButton: React.FC<RoundedButtonProps> = ({
                         size === 'small',
                     'bg-main-purple hover:bg-main-purple-hover text-white':
                         variant === 'primary',
-                    'bg-main-purple/10 hover:bg-main-purple-hover/25 dark:bg-white dark:text-main-purple dark:hover:bg-light-grey text-main-purple':
+                    'bg-main-purple/10 hover:bg-main-purple-hover/25 dark:bg-white dark:text-main-purple dark:hover:bg-main-purple-hover/90 text-main-purple':
                         variant === 'secondary',
                     'bg-red hover:bg-red-hover text-white':
                         variant === 'danger',
-                    'w-[255px]': full,
+                    'w-full': full,
                 }
             )}
         >

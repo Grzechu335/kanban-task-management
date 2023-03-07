@@ -6,7 +6,7 @@ type TextFieldProps = {
     error?: boolean
 }
 
-const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
+const ArrayTextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
     (props, ref) => {
         const { placeholder, error } = props
         return (
@@ -23,7 +23,7 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
                 />
                 {error && (
                     <span className="block absolute text-body-large leading-[40px] text-red right-[16px]">
-                        Error!
+                        Error kurwa!
                     </span>
                 )}
             </label>
@@ -31,6 +31,6 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
     }
 )
 
-TextField.displayName = 'TextField'
+ArrayTextField.displayName = 'TextField'
 
-export default TextField
+export default ArrayTextField

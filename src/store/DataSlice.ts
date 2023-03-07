@@ -93,6 +93,28 @@ const DataSlice = createSlice({
                 taskIndex
             ].subtasks[subtaskIndex].isCompleted = !actualSubtaskState
         },
+        deleteSelectedTask: (state, action: PayloadAction<number>) => {
+            const { boardIndex, columnIndex, taskIndex } = state.editedData
+            const selectedTaskIndex = action.payload
+            // Remove task from tasks array
+            const updatedTasks = state.data[boardIndex].columns[
+                columnIndex
+            ].tasks.filter((task, index) => index !== selectedTaskIndex)
+            // Update state
+            state.data[boardIndex].columns[columnIndex].tasks = updatedTasks
+        },
+        deleteSelectedBoard: (state, action: PayloadAction<number>) => {
+            const { boardIndex } = state.editedData
+            const selectedBoardIndex = action.payload
+            // Remove board from boards array
+            const updatedBoards = state.data.filter(
+                (board, index) => index !== selectedBoardIndex
+            )
+            // Update state
+            state.data = updatedBoards
+            // Change edited board to first in array
+            state.editedData.boardIndex = 0
+        },
     },
 })
 
@@ -101,15 +123,17 @@ export const {
     setEditedTask,
     toggleSubtask,
     changeTaskColumn,
+    deleteSelectedBoard,
+    deleteSelectedTask,
 } = DataSlice.actions
 
 export const boardsInfoSelector = (state: RootState) => {
     const selectedBoardIndex = state.data.editedData.boardIndex
     return {
-        boardsQuantity: state.data.data.length,
-        boardsArray: state.data.data,
+        boardsQuantity: state?.data?.data?.length,
+        boardsArray: state?.data?.data,
         selectedBoardIndex,
-        selectedBoardName: state.data.data[selectedBoardIndex].name,
+        selectedBoardName: state?.data?.data[selectedBoardIndex]?.name,
     }
 }
 
@@ -118,7 +142,11 @@ export const editedDataIndexesSelector = (state: RootState) =>
 
 export const editedTaskSelector = (state: RootState) => {
     const { boardIndex, columnIndex, taskIndex } = state.data.editedData
-    return state.data.data[boardIndex].columns[columnIndex].tasks[taskIndex]
+    // return state.data.data[boardIndex].columns[columnIndex].tasks[taskIndex]
+    return {
+        task: state.data.data[boardIndex].columns[columnIndex].tasks[taskIndex],
+        taskIndex,
+    }
 }
 
 export const currentStatusArraySelector = (state: RootState) => {

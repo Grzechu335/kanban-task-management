@@ -12,24 +12,30 @@ const MainBoard: React.FC = () => {
         <section
             id="mainBoard"
             className={clsx(
-                'mt-[64px] tablet:mt-[81px] min-h-screen  scrollbar-hide desktop:mt-[97px] overflow-scroll bg-light-grey dark:bg-very-dark-grey ',
+                'mt-[64px] tablet:mt-[81px] min-h-full scrollbar-hide flex desktop:mt-[97px] overflow-scroll bg-light-grey dark:bg-very-dark-grey ',
                 {
                     'tablet:ml-[300px]': sideBarStatus,
                 }
             )}
         >
-            <div className="grid grid-flow-col auto-cols-[280px] gap-[24px] m-[24px] w-full h-full bg-light-grey dark:bg-very-dark-grey">
-                {boardsArray[selectedBoardIndex].columns.map(
-                    (column, index) => (
-                        <ColumnItem
-                            key={index}
-                            boardIndex={selectedBoardIndex}
-                            columnIndex={index}
-                            column={column}
-                        />
-                    )
-                )}
-            </div>
+            {boardsArray.length > 0 ? (
+                <div className="grid grid-flow-col auto-cols-[280px] gap-[24px] m-[24px] w-full h-full bg-light-grey dark:bg-very-dark-grey">
+                    {boardsArray[selectedBoardIndex].columns.map(
+                        (column, index) => (
+                            <ColumnItem
+                                key={index}
+                                boardIndex={selectedBoardIndex}
+                                columnIndex={index}
+                                column={column}
+                            />
+                        )
+                    )}
+                </div>
+            ) : (
+                <h1 className="self-center">
+                    You don&apos;t have any boards. Create new one
+                </h1>
+            )}
         </section>
     )
 }

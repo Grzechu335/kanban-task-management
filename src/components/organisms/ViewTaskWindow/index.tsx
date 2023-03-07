@@ -9,14 +9,16 @@ import React, { useEffect } from 'react'
 import optionsIcon from 'public/assets/icon-vertical-ellipsis.svg'
 import SubtaskCheckbox from '@/components/atoms/SubtaskCheckbox'
 import DropDownMenu from '@/components/atoms/DropDownMenu'
+import TaskOptionButton from '@/components/atoms/TaskOptionButton'
 
 const ViewTaskWindow: React.FC = () => {
     const dispatch = useAppDispatch()
     const exitViewTask = () => {
         dispatch(toggleViewTask())
     }
-    const { description, status, subtasks, title } =
-        useAppSelector(editedTaskSelector)
+    const {
+        task: { description, status, subtasks, title },
+    } = useAppSelector(editedTaskSelector)
     const statusObject = useAppSelector(currentStatusArraySelector)
     const allSubtasksQuantity = subtasks.length
     const completedSubtasks = subtasks.reduce((acc: number, cur) => {
@@ -42,21 +44,18 @@ const ViewTaskWindow: React.FC = () => {
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="flex items-center justify-between">
-                    <h2 className="flex-grow">{title}</h2>
-                    <Image
-                        src={optionsIcon}
-                        alt="options icon"
-                        className="cursor-pointer ml-[24px]"
-                        height={20}
-                    />
+                    <h2 className="flex-grow text-black dark:text-white">
+                        {title}
+                    </h2>
+                    <TaskOptionButton />
                 </div>
                 <div className="mt-[24px]">
                     {description === '' ? (
-                        <p className="large-text italic text-center text-medium-gray">
+                        <p className="italic text-center large-text text-medium-gray">
                             No description
                         </p>
                     ) : (
-                        <p className="large-text text-medium-gray text-justify">
+                        <p className="text-justify large-text text-medium-gray">
                             {description}
                         </p>
                     )}
