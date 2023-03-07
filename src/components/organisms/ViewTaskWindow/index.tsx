@@ -10,6 +10,7 @@ import optionsIcon from 'public/assets/icon-vertical-ellipsis.svg'
 import SubtaskCheckbox from '@/components/atoms/SubtaskCheckbox'
 import DropDownMenu from '@/components/atoms/DropDownMenu'
 import TaskOptionButton from '@/components/atoms/TaskOptionButton'
+import clsx from 'clsx'
 
 const ViewTaskWindow: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -25,6 +26,9 @@ const ViewTaskWindow: React.FC = () => {
         if (cur.isCompleted) acc++
         return acc
     }, 0)
+    const everySubTaskCompleted = subtasks.every(
+        (subtask) => subtask.isCompleted
+    )
 
     useEffect(() => {
         document.body.style.overflow = 'hidden'
@@ -40,7 +44,13 @@ const ViewTaskWindow: React.FC = () => {
             onClick={exitViewTask}
         >
             <div
-                className="bg-white dark:bg-dark-grey rounded-md p-[32px] w-[calc(100vw-40px)] tablet:w-[480px] "
+                className={clsx(
+                    '  rounded-md p-[32px] w-[calc(100vw-40px)] tablet:w-[480px]',
+                    {
+                        'bg-[#cdf9d5] dark:bg-[#284b35]': everySubTaskCompleted,
+                        'bg-white dark:bg-dark-grey': !everySubTaskCompleted,
+                    }
+                )}
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="flex items-center justify-between">
