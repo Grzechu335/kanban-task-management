@@ -115,6 +115,25 @@ const DataSlice = createSlice({
             // Change edited board to first in array
             state.editedData.boardIndex = 0
         },
+        addNewBoard: (
+            state,
+            action: PayloadAction<{
+                name: string
+                columns: {
+                    name: string
+                }[]
+            }>
+        ) => {
+            const newBoardParams = action.payload
+            const newBoardObject: Board = {
+                name: newBoardParams.name,
+                columns: newBoardParams.columns.map((column) => ({
+                    name: column.name,
+                    tasks: [],
+                })),
+            }
+            state.data.push(newBoardObject)
+        },
     },
 })
 
@@ -125,6 +144,7 @@ export const {
     changeTaskColumn,
     deleteSelectedBoard,
     deleteSelectedTask,
+    addNewBoard,
 } = DataSlice.actions
 
 export const boardsInfoSelector = (state: RootState) => {

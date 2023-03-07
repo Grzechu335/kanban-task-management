@@ -1,11 +1,16 @@
 import BoardItem from '@/components/atoms/BoardItem'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import { boardsInfoSelector } from '@/store/DataSlice'
+import { toggleAddBoard } from '@/store/EditModesSlice'
 import React from 'react'
 
 const Navigation: React.FC = () => {
     const { boardsArray, boardsQuantity, selectedBoardIndex } =
         useAppSelector(boardsInfoSelector)
+    const dispatch = useAppDispatch()
+    const toggleAddBoardFunction = () => {
+        dispatch(toggleAddBoard())
+    }
     return (
         <div className="flex flex-col flex-grow mt-[15px] ">
             <h4 className="uppercase text-medium-gray ">
@@ -20,7 +25,10 @@ const Navigation: React.FC = () => {
                         selected={index === selectedBoardIndex}
                     />
                 ))}
-                <div className="flex items-center text-main-purple h-[48px] relative cursor-pointer">
+                <div
+                    className="flex items-center text-main-purple h-[48px] relative cursor-pointer"
+                    onClick={toggleAddBoardFunction}
+                >
                     <svg
                         width="16"
                         height="16"

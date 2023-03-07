@@ -1,5 +1,6 @@
 import { useAppSelector } from '@/hooks/redux'
 import {
+    addBoardStatusSelector,
     deleteBoardStatusSelector,
     deleteTaskStatusSelector,
     toggleDeleteBoard,
@@ -10,6 +11,7 @@ import {
     mobileNavStatusSelector,
 } from '@/store/UISlice'
 import React, { useEffect } from 'react'
+import AddBoardWindow from '../organisms/AddBoardWindow'
 import DeleteBoardWindow from '../organisms/DeleteBoardWindow'
 import DeleteTaskWindow from '../organisms/DeleteTaskWindow'
 import Header from '../organisms/Header'
@@ -25,6 +27,7 @@ const HomePageTemplate: React.FC = () => {
     const darkMode = useAppSelector(darkModeStatusSelector)
     const deleteBoardMode = useAppSelector(deleteBoardStatusSelector)
     const deleteTaskMode = useAppSelector(deleteTaskStatusSelector)
+    const addBoardMode = useAppSelector(addBoardStatusSelector)
     useEffect(() => {
         darkMode
             ? (document.body.style.backgroundColor = '#20212C')
@@ -44,6 +47,7 @@ const HomePageTemplate: React.FC = () => {
             {viewTaskMode && <ViewTaskWindow />}
             {deleteBoardMode && <DeleteBoardWindow />}
             {deleteTaskMode && <DeleteTaskWindow />}
+            {addBoardMode && <AddBoardWindow />}
         </div>
     )
 }
