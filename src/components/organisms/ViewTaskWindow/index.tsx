@@ -88,7 +88,12 @@ const ViewTaskWindow: React.FC = () => {
                         </p>
                         <DropDownMenu
                             array={statusObject.statusArray}
-                            defaultIndex={statusObject.defaultArrayIndex}
+                            defaultValue={
+                                statusObject.statusArray[
+                                    statusObject.defaultArrayIndex
+                                ]
+                            }
+                            disabled
                         />
                     </div>
                 </div>

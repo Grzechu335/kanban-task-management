@@ -2,22 +2,21 @@ import clsx from 'clsx'
 import React from 'react'
 import { FieldError, FieldErrors } from 'react-hook-form'
 
-type TextFieldProps = {
+type TextAreaProps = {
     placeholder?: string
     error?: FieldError
 }
 
-const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
+const TextAreaField = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
     (props, ref) => {
         const { placeholder, error, ...formProps } = props
         return (
-            <label className="rounded h-[40px] leading-[40px]  text-body-large flex items-center relative">
-                <input
+            <label className="rounded max-h-[112px] leading-[40px] overflow-y-scroll  text-body-large flex items-center relative">
+                <textarea
                     {...formProps}
                     ref={ref}
-                    type="text"
                     className={clsx(
-                        'px-[16px] large-text border-medium-gray/25 placeholder:text-black/25 dark:placeholder:text-white/25  border outline-none w-full rounded bg-transparent bg-white dark:bg-dark-grey text-black dark:text-white  leading-[40px]',
+                        'px-[16px] large-text border-medium-gray/25 placeholder:text-black/25 dark:placeholder:text-white/25  border outline-none w-full rounded bg-transparent bg-white dark:bg-dark-grey text-black dark:text-white',
                         {
                             'border-red': error,
                         }
@@ -34,6 +33,6 @@ const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
     }
 )
 
-TextField.displayName = 'TextField'
+TextAreaField.displayName = 'TextField'
 
-export default TextField
+export default TextAreaField

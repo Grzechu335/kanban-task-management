@@ -3,6 +3,7 @@ import {
     addBoardStatusSelector,
     deleteBoardStatusSelector,
     deleteTaskStatusSelector,
+    editTaskStatusSelector,
     toggleDeleteBoard,
     viewTaskStatusSelector,
 } from '@/store/EditModesSlice'
@@ -14,6 +15,7 @@ import React, { useEffect } from 'react'
 import AddBoardWindow from '../organisms/AddBoardWindow'
 import DeleteBoardWindow from '../organisms/DeleteBoardWindow'
 import DeleteTaskWindow from '../organisms/DeleteTaskWindow'
+import EditTaskWindow from '../organisms/EditTaskWindow'
 import Header from '../organisms/Header'
 import HeaderMobile from '../organisms/HeaderMobile'
 import MainBoard from '../organisms/MainBoard'
@@ -28,6 +30,7 @@ const HomePageTemplate: React.FC = () => {
     const deleteBoardMode = useAppSelector(deleteBoardStatusSelector)
     const deleteTaskMode = useAppSelector(deleteTaskStatusSelector)
     const addBoardMode = useAppSelector(addBoardStatusSelector)
+    const editTaskMode = useAppSelector(editTaskStatusSelector)
     useEffect(() => {
         darkMode
             ? (document.body.style.backgroundColor = '#20212C')
@@ -48,6 +51,7 @@ const HomePageTemplate: React.FC = () => {
             {deleteBoardMode && <DeleteBoardWindow />}
             {deleteTaskMode && <DeleteTaskWindow />}
             {addBoardMode && <AddBoardWindow />}
+            {editTaskMode && <EditTaskWindow />}
         </div>
     )
 }

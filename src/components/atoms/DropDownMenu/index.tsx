@@ -1,40 +1,22 @@
-import { useAppDispatch, useAppSelector } from '@/hooks/redux'
-import { changeTaskColumn } from '@/store/DataSlice'
-import { toggleViewTask } from '@/store/EditModesSlice'
+import { useAppSelector } from '@/hooks/redux'
 import { darkModeStatusSelector } from '@/store/UISlice'
 import React from 'react'
 import Select, { StylesConfig } from 'react-select'
 type DropDownProps = {
     array: {
-        value: string
+        value: number
         label: string
-        index: number
     }[]
-    defaultIndex: number
-}
-
-interface Options {
-    value: string
-    label: string
-    index: number
-}
-
-const DropDownMenu: React.FC<DropDownProps> = ({ array, defaultIndex }) => {
-    const dispatch = useAppDispatch()
-    const setDifferentStatusFunction = ({
-        index,
-        value,
-    }: {
-        value: string
+    disabled?: boolean
+    defaultValue: {
+        value: number
         label: string
-        index: number
-    }) => {
-        // If new column is same as previous column return function
-        if (defaultIndex === index) return
-        // Else continue
-        dispatch(changeTaskColumn({ index, value }))
-        dispatch(toggleViewTask())
     }
+    onChange?: () => void
+}
+
+const DropDownMenu = React.forwardRef<any, DropDownProps>((props, ref) => {
+    const { disabled, array, defaultValue, onChange, ...otherProps } = props
     const darkMode = useAppSelector(darkModeStatusSelector)
     const customStyles: StylesConfig = {
         singleValue: (styles) => ({
@@ -85,15 +67,19 @@ const DropDownMenu: React.FC<DropDownProps> = ({ array, defaultIndex }) => {
     return (
         <div className="w-full">
             <Select
+                ref={ref}
+                isDisabled={disabled}
+                {...otherProps}
                 options={array}
-                defaultValue={array[defaultIndex]}
                 styles={customStyles}
                 isSearchable={false}
-                onChange={setDifferentStatusFunction}
-                // TODO: fix typescript
+                defaultValue={defaultValue}
+                onChange={onChange}
             />
         </div>
     )
-}
+})
+
+DropDownMenu.displayName = 'DropDownMenu'
 
 export default DropDownMenu

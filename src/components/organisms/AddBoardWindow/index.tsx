@@ -58,25 +58,35 @@ const AddBoardWindow: React.FC = () => {
                 noValidate
             >
                 <h2 className="text-black dark:text-white">Add New Board</h2>
-                <TextField
-                    placeholder="e.g. Web Design"
-                    {...register('boardName', {
-                        required: 'Field cannot be empty',
-                    })}
-                    error={errors?.boardName}
-                />
-                <div className="flex space-y-[12px] flex-col max-h-[25vh] tablet:max-h-[30vh] overflow-y-scroll">
-                    {fields.map((field, index) => (
-                        <ArrayTextField
-                            {...register(`columns.${index}.name` as const, {
-                                required: 'Field cannot be empty',
-                            })}
-                            error={errors?.columns?.[index]?.name}
-                            key={index}
-                            index={index}
-                            remove={remove}
-                        />
-                    ))}
+                <div>
+                    <p className="medium-text text-medium-gray mb-[8px]">
+                        Name
+                    </p>
+                    <TextField
+                        placeholder="e.g. Web Design"
+                        {...register('boardName', {
+                            required: 'Field cannot be empty',
+                        })}
+                        error={errors?.boardName}
+                    />
+                </div>
+                <div>
+                    <p className="medium-text text-medium-gray mb-[8px]">
+                        Columns
+                    </p>
+                    <div className="flex space-y-[12px] flex-col max-h-[25vh] tablet:max-h-[30vh] overflow-y-scroll">
+                        {fields.map((field, index) => (
+                            <ArrayTextField
+                                {...register(`columns.${index}.name` as const, {
+                                    required: 'Field cannot be empty',
+                                })}
+                                error={errors?.columns?.[index]?.name}
+                                key={field.id}
+                                index={index}
+                                remove={remove}
+                            />
+                        ))}
+                    </div>
                 </div>
                 <div
                     onClick={() =>

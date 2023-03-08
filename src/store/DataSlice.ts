@@ -1,8 +1,7 @@
-import { RootState } from './store'
-import { Board } from '@/types/DataTypes'
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Board, Task } from '@/types/DataTypes'
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit'
 import data from '../data/data.json'
-import { Root } from 'postcss'
+import { RootState } from './store'
 
 interface DataInterface {
     data: Board[]
@@ -47,40 +46,6 @@ const DataSlice = createSlice({
                     taskIndex,
                 },
             }
-        },
-        changeTaskColumn: (
-            state,
-            action: PayloadAction<{ index: number; value: string }>
-        ) => {
-            // Get actual edited task indexes
-            const {
-                boardIndex,
-                columnIndex: actualColumnIndex,
-                taskIndex,
-            } = state.editedData
-            const { index: newColumnIndex, value: newColumnName } =
-                action.payload
-            const selectedTask =
-                state.data[boardIndex].columns[actualColumnIndex].tasks[
-                    taskIndex
-                ]
-
-            // Changing status in task object
-            selectedTask.status = newColumnName
-
-            // Add task to new column
-            state.data[boardIndex].columns[newColumnIndex].tasks.push(
-                selectedTask
-            )
-
-            //Remove task from older column
-            const updatedTasks = state.data[boardIndex].columns[
-                actualColumnIndex
-            ].tasks.filter((task) => task.status !== newColumnName)
-
-            // update state
-            state.data[boardIndex].columns[actualColumnIndex].tasks =
-                updatedTasks
         },
         toggleSubtask: (state, action: PayloadAction<number>) => {
             const subtaskIndex = action.payload
@@ -134,6 +99,44 @@ const DataSlice = createSlice({
             }
             state.data.push(newBoardObject)
         },
+        updateSelectedTask: (
+            state,
+            action: PayloadAction<{
+                task: Task
+                updatedColumnIndex: number
+            }>
+        ) => {
+            // Parameters from action
+            const { updatedColumnIndex, task } = action.payload
+
+            // Actual edited task indexes
+            const {
+                boardIndex,
+                columnIndex: actualColumnIndex,
+                taskIndex: actualTaskIndex,
+            } = state.editedData
+
+            // If column ID wasnt changed
+            if (actualColumnIndex === updatedColumnIndex) {
+                // Spread updated task in previous column
+                state.data[boardIndex].columns[actualColumnIndex].tasks[
+                    actualTaskIndex
+                ] = { ...task }
+                // If column ID was changed
+            } else {
+                // Add task to new column
+                state.data[boardIndex].columns[updatedColumnIndex].tasks.push(
+                    task
+                )
+                // Filter previous column from old task
+                const updatedTasks = state.data[boardIndex].columns[
+                    actualColumnIndex
+                ].tasks.filter((_, index) => index !== actualTaskIndex)
+                // Update state
+                state.data[boardIndex].columns[actualColumnIndex].tasks =
+                    updatedTasks
+            }
+        },
     },
 })
 
@@ -141,10 +144,10 @@ export const {
     setEditedBoard,
     setEditedTask,
     toggleSubtask,
-    changeTaskColumn,
     deleteSelectedBoard,
     deleteSelectedTask,
     addNewBoard,
+    updateSelectedTask,
 } = DataSlice.actions
 
 export const boardsInfoSelector = (state: RootState) => {
@@ -173,9 +176,8 @@ export const currentStatusArraySelector = (state: RootState) => {
     const { boardIndex, columnIndex } = state.data.editedData
     const statusArray = state.data.data[boardIndex].columns.map(
         (column, index) => ({
-            value: column.name,
+            value: index,
             label: column.name,
-            index,
         })
     )
     return {
