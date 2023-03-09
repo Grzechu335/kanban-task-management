@@ -5,11 +5,16 @@ import TextAreaField from '@/components/atoms/TextAreaField'
 import TextField from '@/components/atoms/TextField'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import {
+    addNewTask,
     currentStatusArraySelector,
     editedTaskSelector,
     updateSelectedTask,
 } from '@/store/DataSlice'
-import { toggleEditTask, toggleViewTask } from '@/store/EditModesSlice'
+import {
+    toggleAddTask,
+    toggleEditTask,
+    toggleViewTask,
+} from '@/store/EditModesSlice'
 import { EditTaskInputType } from '@/types/EditTaskTypes'
 import { Task } from '@/types/DataTypes'
 import { DevTool } from '@hookform/devtools'
@@ -20,11 +25,12 @@ import {
     useFieldArray,
     useForm,
 } from 'react-hook-form'
+import { NewTaskInputTypes } from '@/types/NewTaskInputTypes'
 
-const EditTaskWindow: React.FC = () => {
+const AddTaskWindow: React.FC = () => {
     const dispatch = useAppDispatch()
     const exitTaskModeFunction = () => {
-        dispatch(toggleEditTask())
+        dispatch(toggleAddTask())
     }
     const { statusArray, defaultArrayIndex } = useAppSelector(
         currentStatusArraySelector
@@ -36,35 +42,43 @@ const EditTaskWindow: React.FC = () => {
         control,
 
         formState: { errors },
-    } = useForm<EditTaskInputType>({
+    } = useForm<NewTaskInputTypes>({
         defaultValues: {
-            description: task.description,
-            status: task.status,
-            subtasks: task.subtasks,
-            title: task.title,
-            newStatus: statusArray[defaultArrayIndex],
+            description: '',
+            status: statusArray[0],
+            subtasks: [
+                {
+                    title: '',
+                    isCompleted: false,
+                },
+                {
+                    title: '',
+                    isCompleted: false,
+                },
+            ],
+            title: '',
         },
     })
     const { fields, append, remove } = useFieldArray({
         name: 'subtasks',
         control,
     })
-    const onSubmit: SubmitHandler<EditTaskInputType> = (data) => {
-        const updatedTask: Task = {
+    const onSubmit: SubmitHandler<NewTaskInputTypes> = (data) => {
+        const newTask: Task = {
             title: data.title,
             description: data.description,
             subtasks: data.subtasks,
-            status: data.newStatus.label,
+            status: data.status.label,
         }
-        const updatedColumnIndex = data.newStatus.value
+        const newTaskColumnIndex = data.status.value
         dispatch(
-            updateSelectedTask({
-                task: updatedTask,
-                updatedColumnIndex: updatedColumnIndex,
+            addNewTask({
+                newTask,
+                newTaskColumnIndex,
             })
         )
-        dispatch(toggleEditTask())
-        dispatch(toggleViewTask())
+
+        dispatch(toggleAddTask())
     }
     return (
         <div
@@ -76,14 +90,14 @@ const EditTaskWindow: React.FC = () => {
                 onClick={(e) => e.stopPropagation()}
                 onSubmit={handleSubmit(onSubmit)}
             >
-                <h2 className="text-black dark:text-white">Edit Task</h2>
+                <h2 className="text-black dark:text-white">Add New Task</h2>
                 <div>
                     <p className="medium-text text-medium-gray mb-[8px]">
                         Title
                     </p>
                     <TextField
                         error={errors.title}
-                        placeholder=""
+                        placeholder="e.g. Take coffee break"
                         {...register('title', {
                             required: 'Field cannot be empty',
                         })}
@@ -93,7 +107,10 @@ const EditTaskWindow: React.FC = () => {
                     <p className="medium-text text-medium-gray mb-[8px]">
                         Description
                     </p>
-                    <TextAreaField {...register('description')} />
+                    <TextAreaField
+                        {...register('description')}
+                        placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
+                    />
                 </div>
                 <div className="flex flex-col space-y-[12px]">
                     <p className="medium-text text-medium-gray mb-[8px]">
@@ -106,6 +123,7 @@ const EditTaskWindow: React.FC = () => {
                                 required: 'Field cannot be empty',
                             })}
                             error={errors.subtasks?.[index]?.title}
+                            placeholder="e.g. Make coffee"
                             remove={remove}
                             index={index}
                         />
@@ -129,12 +147,12 @@ const EditTaskWindow: React.FC = () => {
                 <div>
                     <Controller
                         control={control}
-                        name="newStatus"
+                        name="status"
                         render={({ field: { onChange, value, ref } }) => (
                             <DropDownMenu
                                 ref={ref}
                                 array={statusArray}
-                                defaultValue={value}
+                                defaultValue={statusArray[0]}
                                 onChange={onChange}
                             />
                         )}
@@ -155,4 +173,4 @@ const EditTaskWindow: React.FC = () => {
     )
 }
 
-export default EditTaskWindow
+export default AddTaskWindow

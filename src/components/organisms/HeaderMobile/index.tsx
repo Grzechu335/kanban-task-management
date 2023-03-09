@@ -2,6 +2,7 @@ import HeaderOptionButton from '@/components/atoms/HeaderOptionButton'
 import RoundedButton from '@/components/atoms/RoundedButton'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import { boardsInfoSelector } from '@/store/DataSlice'
+import { toggleAddTask } from '@/store/EditModesSlice'
 import { mobileNavStatusSelector, toggleMobileNav } from '@/store/UISlice'
 import Image from 'next/image'
 import mobileAddTaskIcon from 'public/assets/icon-add-task-mobile.svg'
@@ -16,6 +17,9 @@ const HeaderMobile: React.FC = () => {
     const dispatch = useAppDispatch()
     const toggleMobileNavFunction = () => {
         dispatch(toggleMobileNav())
+    }
+    const toggleAddTaskFunction = () => {
+        dispatch(toggleAddTask())
     }
     return (
         <header className="bg-white tablet:hidden h-[64px] fixed top-0 left-0 w-full flex justify-between items-center px-[16px] dark:bg-dark-grey">
@@ -47,15 +51,17 @@ const HeaderMobile: React.FC = () => {
                 </div>
             </div>
             <div className="flex items-center space-x-[16px]">
-                <RoundedButton
-                    variant="primary"
-                    size="small"
-                >
-                    <Image
-                        src={mobileAddTaskIcon}
-                        alt="add task icon"
-                    />
-                </RoundedButton>
+                <div onClick={toggleAddTaskFunction}>
+                    <RoundedButton
+                        variant="primary"
+                        size="small"
+                    >
+                        <Image
+                            src={mobileAddTaskIcon}
+                            alt="add task icon"
+                        />
+                    </RoundedButton>
+                </div>
                 <HeaderOptionButton />
             </div>
         </header>

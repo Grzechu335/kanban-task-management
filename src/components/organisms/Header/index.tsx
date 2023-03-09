@@ -1,5 +1,5 @@
 import RoundedButton from '@/components/atoms/RoundedButton'
-import { useAppSelector } from '@/hooks/redux'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import { boardsInfoSelector } from '@/store/DataSlice'
 import { darkModeStatusSelector, sidebarStatusSelector } from '@/store/UISlice'
 import clsx from 'clsx'
@@ -9,11 +9,17 @@ import Image from 'next/image'
 import lightModeLogo from 'public/assets/logo-dark.svg'
 import darkModeLogo from 'public/assets/logo-light.svg'
 import HeaderOptionButton from '@/components/atoms/HeaderOptionButton'
+import { toggleAddTask, toggleEditBoard } from '@/store/EditModesSlice'
 
 const Header: React.FC = () => {
+    const dispatch = useAppDispatch()
     const { selectedBoardName } = useAppSelector(boardsInfoSelector)
     const sidebarStatus = useAppSelector(sidebarStatusSelector)
     const darkModeStatus = useAppSelector(darkModeStatusSelector)
+    const toggleAddTaskFunction = () => {
+        dispatch(toggleAddTask())
+    }
+
     return (
         <header
             className={clsx(
@@ -45,7 +51,7 @@ const Header: React.FC = () => {
                 </h1>
             </div>
             <div className="flex items-center space-x-[24px]">
-                <div>
+                <div onClick={toggleAddTaskFunction}>
                     <RoundedButton
                         variant="primary"
                         size="small"
