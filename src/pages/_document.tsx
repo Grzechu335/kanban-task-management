@@ -4,7 +4,7 @@ export default function Document() {
     return (
         <Html lang="en">
             <Head />
-            <body className="scrollbar-hide relative">
+            <body className="relative h-full scrollbar-hide">
                 <Main />
                 <NextScript />
             </body>

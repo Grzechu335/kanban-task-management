@@ -1,18 +1,23 @@
-import { useAppSelector } from '@/hooks/redux'
+import RoundedButton from '@/components/atoms/RoundedButton'
+import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import { boardsInfoSelector } from '@/store/DataSlice'
+import { toggleAddBoard } from '@/store/EditModesSlice'
 import { sidebarStatusSelector } from '@/store/UISlice'
 import clsx from 'clsx'
 import ColumnItem from '../ColumnItem'
 
 const MainBoard: React.FC = () => {
+    const dispatch = useAppDispatch()
     const { boardsArray, selectedBoardIndex } =
         useAppSelector(boardsInfoSelector)
     const sideBarStatus = useAppSelector(sidebarStatusSelector)
+    const createNewBoardFunction = () => {
+        dispatch(toggleAddBoard())
+    }
     return (
         <section
-            id="mainBoard"
             className={clsx(
-                'mt-[64px] tablet:mt-[81px] min-h-full scrollbar-hide flex desktop:mt-[97px] overflow-scroll bg-light-grey dark:bg-very-dark-grey ',
+                'mt-[64px] tablet:mt-[81px] h-full scrollbar-hide flex desktop:mt-[97px] overflow-scroll bg-light-grey dark:bg-very-dark-grey ',
                 {
                     'tablet:ml-[300px]': sideBarStatus,
                 }
@@ -32,9 +37,20 @@ const MainBoard: React.FC = () => {
                     )}
                 </div>
             ) : (
-                <h1 className="self-center">
-                    You don&apos;t have any boards. Create new one
-                </h1>
+                <div className="grid w-full h-screen mt-[-64px] tablet:mt-[-81px] desktop:mt-[-97px]  place-content-center">
+                    <h1 className="self-center">
+                        You don&apos;t have any boards. Create new one to get
+                        started
+                    </h1>
+                    <div
+                        className="mx-auto mt-[32px]"
+                        onClick={createNewBoardFunction}
+                    >
+                        <RoundedButton variant="primary">
+                            Create New Board
+                        </RoundedButton>
+                    </div>
+                </div>
             )}
         </section>
     )

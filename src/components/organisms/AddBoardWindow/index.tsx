@@ -6,7 +6,6 @@ import { toggleAddBoard } from '@/store/EditModesSlice'
 import { AddBoardInputTypes } from '@/types/AddBoardInputTypes'
 import React from 'react'
 import { SubmitHandler, useForm, useFieldArray } from 'react-hook-form'
-import { DevTool } from '@hookform/devtools'
 import { addNewBoard } from '@/store/DataSlice'
 
 const AddBoardWindow: React.FC = () => {
@@ -17,6 +16,7 @@ const AddBoardWindow: React.FC = () => {
         formState: { errors },
     } = useForm<AddBoardInputTypes>({
         defaultValues: {
+            boardName: '',
             columns: [
                 {
                     name: 'Todo',

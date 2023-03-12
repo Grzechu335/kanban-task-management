@@ -44,7 +44,7 @@ const HomePageTemplate: React.FC = () => {
     }, [darkMode])
     return (
         <div
-            className={`flex flex-col   ${
+            className={`flex flex-col h-full  ${
                 darkMode ? 'bg-very-dark-grey' : 'bg-light-grey'
             }`}
         >

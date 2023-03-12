@@ -9,7 +9,6 @@ import {
 } from '@/store/DataSlice'
 import { toggleEditBoard } from '@/store/EditModesSlice'
 import { EditBoardInputTypes } from '@/types/EditBoardInputTypes'
-import { DevTool } from '@hookform/devtools'
 import React from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
@@ -120,7 +119,6 @@ const EditBoardWindow: React.FC = () => {
                     Save Changes
                 </RoundedButton>
             </form>
-            <DevTool control={control} />
         </div>
     )
 }
