@@ -4,7 +4,7 @@ import TextField from '@/components/atoms/TextField'
 import { useAppDispatch } from '@/hooks/redux'
 import { toggleAddBoard } from '@/store/EditModesSlice'
 import { AddBoardInputTypes } from '@/types/AddBoardInputTypes'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SubmitHandler, useForm, useFieldArray } from 'react-hook-form'
 import { addNewBoard } from '@/store/DataSlice'
 
@@ -46,6 +46,13 @@ const AddBoardWindow: React.FC = () => {
     const exitAddBoardWindow = () => {
         dispatch(toggleAddBoard())
     }
+    useEffect(() => {
+        document.body.style.overflow = 'hidden'
+        return () => {
+            document.body.style.overflow = 'scroll'
+        }
+    })
+
     return (
         <div
             className="fixed top-0 left-0 grid w-full h-full place-content-center bg-black/50"

@@ -1,16 +1,14 @@
+import DropDownMenu from '@/components/atoms/DropDownMenu'
+import SubtaskCheckbox from '@/components/atoms/SubtaskCheckbox'
+import TaskOptionButton from '@/components/atoms/TaskOptionButton'
 import { useAppDispatch, useAppSelector } from '@/hooks/redux'
 import {
     currentStatusArraySelector,
     editedTaskSelector,
 } from '@/store/DataSlice'
 import { toggleViewTask } from '@/store/EditModesSlice'
-import Image from 'next/image'
-import React, { useEffect } from 'react'
-import optionsIcon from 'public/assets/icon-vertical-ellipsis.svg'
-import SubtaskCheckbox from '@/components/atoms/SubtaskCheckbox'
-import DropDownMenu from '@/components/atoms/DropDownMenu'
-import TaskOptionButton from '@/components/atoms/TaskOptionButton'
 import clsx from 'clsx'
+import React, { useEffect } from 'react'
 
 const ViewTaskWindow: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -40,12 +38,12 @@ const ViewTaskWindow: React.FC = () => {
     // TODO Fix overflow issue
     return (
         <div
-            className="fixed top-0 left-0 bg-black/50 w-full min-h-screen px-[16px] grid place-content-center z-[100]"
+            className="fixed top-0 left-0 bg-black/50 w-full min-h-screen px-[16px] flex justify-center items-start tablet:items-center z-[100]"
             onClick={exitViewTask}
         >
             <div
                 className={clsx(
-                    '  rounded-md p-[32px] w-[calc(100vw-40px)] tablet:w-[480px]',
+                    'mt-[30px] tablet:mt-0 rounded-md p-[32px] w-[calc(100vw-40px)] tablet:w-[480px]',
                     {
                         'bg-[#cdf9d5] dark:bg-[#284b35]': everySubTaskCompleted,
                         'bg-white dark:bg-dark-grey': !everySubTaskCompleted,
@@ -72,7 +70,7 @@ const ViewTaskWindow: React.FC = () => {
                 </div>
                 <div>
                     <p className="medium-text mt-[24px] text-medium-gray font-bold">{`Subtasks (${completedSubtasks} of ${allSubtasksQuantity})`}</p>
-                    <div className="flex flex-col mt-[16px] space-y-[8px]">
+                    <div className="flex flex-col mt-[16px] space-y-[8px] max-h-[25vh] overflow-y-scroll">
                         {subtasks.map((subtask, index) => (
                             <SubtaskCheckbox
                                 key={index}

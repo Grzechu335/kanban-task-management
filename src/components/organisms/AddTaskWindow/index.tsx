@@ -18,7 +18,7 @@ import {
 import { EditTaskInputType } from '@/types/EditTaskTypes'
 import { Task } from '@/types/DataTypes'
 import { DevTool } from '@hookform/devtools'
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     Controller,
     SubmitHandler,
@@ -80,6 +80,13 @@ const AddTaskWindow: React.FC = () => {
 
         dispatch(toggleAddTask())
     }
+    useEffect(() => {
+        document.body.style.overflow = 'hidden'
+        return () => {
+            document.body.style.overflow = 'scroll'
+        }
+    })
+
     return (
         <div
             className="fixed top-0 left-0 grid w-full h-full bg-black/50 place-content-center z-[100]"
@@ -112,7 +119,7 @@ const AddTaskWindow: React.FC = () => {
                         placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
                     />
                 </div>
-                <div className="flex flex-col space-y-[12px]">
+                <div className="flex flex-col space-y-[12px] max-h-[25vh] overflow-y-scroll">
                     <p className="medium-text text-medium-gray mb-[8px]">
                         Subtasks
                     </p>

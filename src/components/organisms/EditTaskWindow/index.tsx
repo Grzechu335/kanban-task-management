@@ -13,7 +13,7 @@ import { toggleEditTask, toggleViewTask } from '@/store/EditModesSlice'
 import { EditTaskInputType } from '@/types/EditTaskTypes'
 import { Task } from '@/types/DataTypes'
 import { DevTool } from '@hookform/devtools'
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
     Controller,
     SubmitHandler,
@@ -66,13 +66,20 @@ const EditTaskWindow: React.FC = () => {
         dispatch(toggleEditTask())
         dispatch(toggleViewTask())
     }
+    useEffect(() => {
+        document.body.style.overflow = 'hidden'
+        return () => {
+            document.body.style.overflow = 'scroll'
+        }
+    })
+
     return (
         <div
-            className="fixed top-0 left-0 grid w-full h-full bg-black/50 place-content-center z-[100]"
+            className="fixed top-0 left-0 w-full h-full bg-black/50 flex justify-center items-start tablet:items-center z-[100]"
             onClick={exitTaskModeFunction}
         >
             <form
-                className="bg-white rounded-lg dark:bg-dark-grey w-[calc(100vw-40px)] tablet:w-[480px] p-[32px] flex flex-col space-y-[24px]"
+                className="bg-white rounded-lg mt-[30px] tablet:mt-0 dark:bg-dark-grey w-[calc(100vw-40px)] tablet:w-[480px] p-[32px] flex flex-col space-y-[24px]"
                 onClick={(e) => e.stopPropagation()}
                 onSubmit={handleSubmit(onSubmit)}
             >
@@ -95,7 +102,7 @@ const EditTaskWindow: React.FC = () => {
                     </p>
                     <TextAreaField {...register('description')} />
                 </div>
-                <div className="flex flex-col space-y-[12px]">
+                <div className="flex flex-col space-y-[12px] max-h-[25vh] overflow-y-scroll">
                     <p className="medium-text text-medium-gray mb-[8px]">
                         Subtasks
                     </p>

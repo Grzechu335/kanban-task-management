@@ -9,7 +9,7 @@ import {
 } from '@/store/DataSlice'
 import { toggleEditBoard } from '@/store/EditModesSlice'
 import { EditBoardInputTypes } from '@/types/EditBoardInputTypes'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form'
 
 const EditBoardWindow: React.FC = () => {
@@ -54,13 +54,21 @@ const EditBoardWindow: React.FC = () => {
     const exitAddBoardWindow = () => {
         dispatch(toggleEditBoard())
     }
+
+    useEffect(() => {
+        document.body.style.overflow = 'hidden'
+        return () => {
+            document.body.style.overflow = 'scroll'
+        }
+    })
+
     return (
         <div
             className="fixed top-0 left-0 grid w-full h-full place-content-center bg-black/50"
             onClick={exitAddBoardWindow}
         >
             <form
-                className="bg-white dark:bg-very-dark-grey w-[calc(100vw-40px)] tablet:w-[480px] rounded-md p-[32px] flex flex-col space-y-[24px]"
+                className="bg-white dark:bg-very-dark-grey w-[calc(100vw-40px)] tablet:w-[480px] mt-[30px] tablet:mt-0 rounded-md p-[32px] flex flex-col space-y-[24px]"
                 onClick={(e) => e.stopPropagation()}
                 onSubmit={handleSubmit(onSubmit)}
                 noValidate

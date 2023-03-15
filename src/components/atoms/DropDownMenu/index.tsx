@@ -31,6 +31,7 @@ const DropDownMenu = React.forwardRef<any, DropDownProps>((props, ref) => {
         menu: (styles) => ({
             ...styles,
             // position: 'static',
+            overflowY: 'scroll',
             boxShadow: '0',
             borderRadius: '8px',
             backgroundColor: darkMode ? '#20212C' : '#fff',
@@ -69,6 +70,7 @@ const DropDownMenu = React.forwardRef<any, DropDownProps>((props, ref) => {
             <Select
                 ref={ref}
                 isDisabled={disabled}
+                menuPlacement="top"
                 {...otherProps}
                 options={array}
                 styles={customStyles}
