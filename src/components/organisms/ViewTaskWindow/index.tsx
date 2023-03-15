@@ -35,7 +35,6 @@ const ViewTaskWindow: React.FC = () => {
         }
     })
 
-    // TODO Fix overflow issue
     return (
         <div
             className="fixed top-0 left-0 bg-black/50 w-full min-h-screen px-[16px] flex justify-center items-start tablet:items-center z-[100]"
