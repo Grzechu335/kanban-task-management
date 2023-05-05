@@ -22,35 +22,35 @@ const HeaderMobile: React.FC = () => {
         dispatch(toggleAddTask())
     }
     return (
-        <header className="bg-white tablet:hidden h-[64px] fixed top-0 left-0 w-full flex justify-between items-center px-[16px] dark:bg-dark-grey">
+        <header className="bg-white tablet:hidden h-[64px]  fixed top-0 left-0 w-full flex justify-between items-center px-[16px] dark:bg-dark-grey">
             <div
-                className="flex items-center space-x-[16px]"
+                className="flex items-center space-x-[16px] flex-grow overflow-hidden"
                 onClick={toggleMobileNavFunction}
             >
                 <Image
                     src={mobileLogo}
                     alt="mobile logo"
                 />
-                <div className="flex items-center">
-                    <h2 className="text-black dark:text-white">
+                <div className="flex items-center w-full">
+                    <h2 className="text-black truncate dark:text-white">
                         {selectedBoardName}
                     </h2>
-                    {mobileNavStatus ? (
-                        <Image
-                            src={arrowUpIcon}
-                            alt="show mobile nav"
-                            className="ml-[8px]"
-                        />
-                    ) : (
-                        <Image
-                            src={arrowDownIcon}
-                            alt="hide mobile nav"
-                            className="ml-[8px]"
-                        />
-                    )}
+                    <div className="mx-[16px]">
+                        {mobileNavStatus ? (
+                            <Image
+                                src={arrowUpIcon}
+                                alt="show mobile nav"
+                            />
+                        ) : (
+                            <Image
+                                src={arrowDownIcon}
+                                alt="hide mobile nav"
+                            />
+                        )}
+                    </div>
                 </div>
             </div>
-            <div className="flex items-center space-x-[16px]">
+            <div className="flex items-center space-x-[16px] flex-shrink-0 ml-[16px]">
                 <div onClick={toggleAddTaskFunction}>
                     <RoundedButton
                         variant="primary"

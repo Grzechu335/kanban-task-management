@@ -23,7 +23,7 @@ const Header: React.FC = () => {
     return (
         <header
             className={clsx(
-                'border-b hidden tablet:flex px-[24px] justify-between items-center fixed top-0 border-b-lines-light dark:border-b-lines-dark tablet:h-[81px]  desktop:h-[97px] bg-white dark:bg-dark-grey',
+                'border-b hidden tablet:flex px-[24px]  items-center fixed top-0 border-b-lines-light dark:border-b-lines-dark tablet:h-[81px]  desktop:h-[97px] bg-white dark:bg-dark-grey',
                 {
                     'left-[300px] w-[calc(100%-300px)]': sidebarStatus,
                     'left-0 w-full': !sidebarStatus,
@@ -46,11 +46,17 @@ const Header: React.FC = () => {
                         )}
                     </div>
                 )}
-                <h1 className={` ${!sidebarStatus && 'tablet:pl-[32px]'}`}>
+            </div>
+            <div className="flex-grow overflow-hidden">
+                <h1
+                    className={clsx('truncate', {
+                        'tablet:pl-[32px]': !sidebarStatus,
+                    })}
+                >
                     {selectedBoardName}
                 </h1>
             </div>
-            <div className="flex items-center space-x-[24px]">
+            <div className="flex items-center space-x-[24px] ml-5 flex-shrink-0">
                 <div onClick={toggleAddTaskFunction}>
                     <RoundedButton
                         variant="primary"
