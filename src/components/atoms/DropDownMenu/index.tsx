@@ -66,7 +66,7 @@ const DropDownMenu = React.forwardRef<any, DropDownProps>((props, ref) => {
         }),
     }
     return (
-        <div className="w-full">
+        <div className={`w-full ${disabled ? 'cursor-not-allowed' : ''} `}>
             <Select
                 ref={ref}
                 isDisabled={disabled}
